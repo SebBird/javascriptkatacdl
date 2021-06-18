@@ -25,7 +25,7 @@ const BasketItem = styled.div`
   font-size: 0.8rem;
 `;
 
-const Basket = ({ quantities, resetBasket }) => {
+const Basket = ({ total, quantities, resetBasket }) => {
   return (
     <BasketContainer>
       <BasketDiv>
@@ -40,6 +40,9 @@ const Basket = ({ quantities, resetBasket }) => {
               </BasketItem>
             ) : null
           )}
+          <div>
+            <h3>Total: {total}</h3>
+          </div>
         </div>
         <Button wording={"Reset Basket"} func={resetBasket} />
       </BasketDiv>

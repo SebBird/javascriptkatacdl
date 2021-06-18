@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ProductList from "../assets/ProductList";
+import toMoney from "../assets/toMoney";
 import Products from "../components/Products";
 import Basket from "../components/Basket";
 
@@ -12,12 +13,27 @@ ProductList.forEach(({ item }) => {
 
 const MainPage = () => {
   const [basketQuantities, setBasketQuantities] = useState(allProducts);
+  const [total, updateTotal] = useState(toMoney(0));
 
   const setNewProductQuantities = (item, quantity) => {
     // Update the corresponding product in the basketQuantities, and recalculate the new total price
     let newBasketQuantities = { ...basketQuantities };
     newBasketQuantities[item] += quantity;
+    updateTotal(calculateTotal(ProductList, newBasketQuantities));
     setBasketQuantities(newBasketQuantities);
+  };
+
+  const calculateTotal = (productList, quantities) => {
+    let total = 0;
+
+    productList.forEach(({ item, basePrice }) => {
+      // If the current product quantity is zero, move onto the next product
+      if (quantities[item] === 0) return;
+
+      total += quantities[item] * basePrice;
+    });
+
+    return toMoney(total);
   };
 
   const resetBasket = () => {
@@ -31,7 +47,11 @@ const MainPage = () => {
         productList={ProductList}
         setQuantity={setNewProductQuantities}
       />
-      <Basket quantities={basketQuantities} resetBasket={resetBasket} />
+      <Basket
+        quantities={basketQuantities}
+        total={total}
+        resetBasket={resetBasket}
+      />
     </div>
   );
 };
