@@ -17,8 +17,12 @@ const MainPage = () => {
     // Update the corresponding product in the basketQuantities, and recalculate the new total price
     let newBasketQuantities = { ...basketQuantities };
     newBasketQuantities[item] += quantity;
-    console.log(newBasketQuantities);
     setBasketQuantities(newBasketQuantities);
+  };
+
+  const resetBasket = () => {
+    // Set the quantities back to the original empty product list.
+    setBasketQuantities(allProducts);
   };
 
   return (
@@ -27,7 +31,7 @@ const MainPage = () => {
         productList={ProductList}
         setQuantity={setNewProductQuantities}
       />
-      <Basket quantities={basketQuantities} />
+      <Basket quantities={basketQuantities} resetBasket={resetBasket} />
     </div>
   );
 };
