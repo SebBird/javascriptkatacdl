@@ -27,7 +27,7 @@ const MainPage = () => {
         productList={ProductList}
         setQuantity={setNewProductQuantities}
       />
-      <Basket />
+      <Basket quantities={basketQuantities} />
     </div>
   );
 };
