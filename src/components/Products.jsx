@@ -1,18 +1,38 @@
 import React from "react";
+import styled from "styled-components";
 import Item from "./Item";
 
-const Products = ({ productList }) => {
+const Checkout = styled.div`
+  width: 100%;
+`;
+
+const Banner = styled.div`
+  text-align: center;
+  border-bottom: 2px solid black;
+`;
+
+const AllProducts = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+`;
+
+const Products = ({ productList, setQuantity }) => {
   return (
-    <div>
-      <div>
+    <Checkout>
+      <Banner>
         <h1>Checkout System</h1>
-      </div>
-      <div>
+      </Banner>
+      <AllProducts>
         {productList.map((product) => (
-          <Item product={product} key={product.item} />
+          <Item
+            product={product}
+            key={product.item}
+            setQuantity={setQuantity}
+          />
         ))}
-      </div>
-    </div>
+      </AllProducts>
+    </Checkout>
   );
 };
 
