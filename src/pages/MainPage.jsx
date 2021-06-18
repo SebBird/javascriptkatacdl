@@ -26,10 +26,19 @@ const MainPage = () => {
   const calculateTotal = (productList, quantities) => {
     let total = 0;
 
-    productList.forEach(({ item, basePrice }) => {
-      // If the current product quantity is zero, move onto the next product
-      if (quantities[item] === 0) return;
+    productList.forEach(({ item, basePrice, specialOffer }) => {
+      if (quantities[item] === 0) return; // If the current product quantity is zero, move onto the next product
+      if (specialOffer) {
+        // If the current product has a truthy property of specialOffer, calculate the necessary discount as well as any full priced remaining product quantity
+        const { specialQuantity, specialPrice } = specialOffer;
 
+        let deal = quantities[item] / specialQuantity;
+        let remainder = quantities[item] % specialQuantity;
+
+        total += Math.floor(deal) * specialPrice + remainder * basePrice;
+        return;
+      }
+      // If the quantity is above zero but it doesn't have any specialOffers, simply calculate the price
       total += quantities[item] * basePrice;
     });
 
@@ -37,8 +46,9 @@ const MainPage = () => {
   };
 
   const resetBasket = () => {
-    // Set the quantities back to the original empty product list.
+    // Set the quantities back to the original empty product list, and total back to zero.
     setBasketQuantities(allProducts);
+    updateTotal(toMoney(0));
   };
 
   return (
