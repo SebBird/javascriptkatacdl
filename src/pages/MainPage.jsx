@@ -13,9 +13,20 @@ ProductList.forEach(({ item }) => {
 const MainPage = () => {
   const [basketQuantities, setBasketQuantities] = useState(allProducts);
 
+  const setNewProductQuantities = (item, quantity) => {
+    // Update the corresponding product in the basketQuantities, and recalculate the new total price
+    let newBasketQuantities = { ...basketQuantities };
+    newBasketQuantities[item] += quantity;
+    console.log(newBasketQuantities);
+    setBasketQuantities(newBasketQuantities);
+  };
+
   return (
     <div>
-      <Products productList={ProductList} />
+      <Products
+        productList={ProductList}
+        setQuantity={setNewProductQuantities}
+      />
       <Basket />
     </div>
   );
